@@ -136,23 +136,122 @@ def attend_event():
                data = { 'message' : 'Invalid token'}
                return jsonify(data), 401
 
-
 @app.route('/api/v0.1/registerevent', methods=['POST'])
 def register_event():
+
+     """
+
+     registers a student to an event if criteria is met,
+     returns appropriate response
+
+     """ 
+
+     if  len(request.args) != 2 or ('usn' not in request.args and 'eid' not in request.args) :
+          return '', 400
+
+     else :
+          
+
+          usn = request.args['usn']
+          eid = request.args['eid']
+          
+          if helper_obj.validate_usn(usn) and helper_obj.validate_event(eid):
+               
+               constraint, _reason = helper_obj.constraint_check (usn, eid)
+               print('right track','\n'*3)
+               if not constraint:
+                    
+                    data = {   }    # handle 406, not acceptable , pass reason 
+                    return  '', 406
+               
+               else :
+                   
+                    token = helper_obj.update_event(usn, eid)
+
+                    data = { "message" : "successful, and token is mailed", "token" : token }
+
+                    return jsonify(data), 200
+
 
 @app.route('/api/v0.1/mailattendees', methods=['POST'])
 def mail_attendance():
 
+     """
+
+     mails event co-ordinator, the list of students  who have attendend the event
+     returns appropriate response 
+
+     """ 
+
+     if  len(request.args) != 2 or ('eid' not in request.args and 'auth_token' not in request.args) :
+          return '', 400
+     
+     if not helper_obj.validate_token(request.args['auth_token']):
+          return '', 401
+
+     if not helper_obj.validate_event(request.args['eid']):
+          return '', 400
+     
+     email = helper_obj.get_email(request.args['auth_token'])
+     data = helper_obj.get_attendees(request.args['eid'], email )
+
+
+     return jsonify(data), 200
 
 
 @app.route('/api/v0.1/sendinvitation', methods=['POST'])
 def send_invitation():
 
+     """
+
+     sends invitations to students who are all eligible to the given event
+
+     """ 
+
+     if  len(request.args) != 2 or ('eid' not in request.args and 'auth_token' not in request.args) :
+          return '', 400
+
+
+     if not helper_obj.validate_token(request.args['auth_token']):
+          return '', 401
+
+     if not helper_obj.validate_event(request.args['eid']):
+          return '', 400
+
+     data = helper_obj.invite_eligible_students(request.args['eid']) 
+     response = { "message" : "emails sent", "data" : data}
+     return jsonify(response), 200
+
+
+
+# TODO add remaining remover api end points
 
 
 @app.route('/api/v0.1/rmevent', methods=['POST'])
 def remove_event():
 
+     """
+
+     sends invitations to students who are all eligible to the given event
+
+     """ 
+
+     if  len(request.args) != 2 or ('auth_token' not in request.args and 'eid' not in request.args) :
+          return '', 400
+
+
+     if not helper_obj.validate_token(request.args['auth_token']):
+          return '', 401
+
+     if not helper_obj.validate_event(request.args['eid']):
+          return '', 400
+
+     event_name = helper_obj.get_event_name( request.args['eid'] )
+     mydb.events.remove({ "eid" : request.args['eid'] })
+
+     response  = {  'message'  : 'event removed' , 'event_name' : event_name  } 
+
+     return jsonify(response), 200
 
 
 
