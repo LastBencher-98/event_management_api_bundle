@@ -1,2 +1,4 @@
 EZGmail==0.0.7
 pymongo==3.8.0
+Flask==1.0.2
+Flask-RESTful==0.3.7
