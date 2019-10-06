@@ -1,3 +1,5 @@
+##!/usr/bin/python3   #based on python env
+
 
 import time
 import datetime
@@ -9,16 +11,9 @@ import json
 import helper
 
 
-
-
-
 mydb = MongoDB( database = 'event_management_backend', host='localhost', port=27017)
 app = Flask(__name__)
 helper_obj = helper.helper(mydb)
-
-
-
-
 
 
 @app.route('/api/v0.1/listeventcords', methods=['GET'])
@@ -135,6 +130,7 @@ def attend_event():
           else:
                data = { 'message' : 'Invalid token'}
                return jsonify(data), 401
+
 
 @app.route('/api/v0.1/registerevent', methods=['POST'])
 def register_event():
