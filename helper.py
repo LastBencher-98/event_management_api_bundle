@@ -7,7 +7,6 @@ class helper(object):
         self.mydb = dbobject
 
 
-
     def validate_token(self, auth_token):
         return len(list(self.mydb.faculty_coordinators.find({'api_token':  auth_token.strip()  }))) > 0 
 
@@ -71,6 +70,7 @@ class helper(object):
     def validate_usn(self,  usn):
         
         return len(list(self.mydb.students_data.find({'StudentID':  usn.strip()  }))) > 0 
+
 
     def validate_event(self,  eid):
         
@@ -141,9 +141,3 @@ class helper(object):
                 email_sender.send_invite(email, name, event )
         print('email invites sent')
         return usns
-
-
-
-
-
-
