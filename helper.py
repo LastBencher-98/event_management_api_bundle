@@ -72,44 +72,78 @@ class helper(object):
         
         return len(list(self.mydb.students_data.find({'StudentID':  usn.strip()  }))) > 0 
 
-
-
-
-
-
-
-
     def validate_event(self,  eid):
         
-         pass
+    
+        return len(list(self.mydb.events.find({'eid': eid.strip()  }))) > 0 
 
 
 
 
     def update_event( self, usn, eid):
+        """
 
-         pass
+        TODO : better token implementation
+        """
+
+        event = list(self.mydb.events.find({'eid': eid  }))[0]
+    
+        token = str(abs(hash(str(eid)+str(usn))))     # token implementation
+        
+        old_list =  list(self.mydb.events.find({'eid': eid.strip()  }))[0]['registered_students']
+        
+        if usn  not in [ i[0] for i in old_list] : 
+
+            old_list.append(  [usn, token] )
+            self.mydb.events.update(  {  "eid" : eid  },  {   "$set"  :   { "registered_students" : old_list  } } )
+            self.mydb.events.update(  {  "eid" : eid  },  {   "$inc"  :   { "vacancy" : -1  } } )
+        
+            email =   list(self.mydb.students_data.find({'StudentID': usn.strip() }))[0]['email']
+            email_sender.send_token(email, token, event)
+            print('sending invitation')
+        
+        return token
 
 
     def get_email( self,  auth_token):
 
-         pass
+        return list(self.mydb.faculty_coordinators.find({'api_token' : auth_token}))[0]['email']
 
 
     def get_name(self, usn):
 
-         pass
+        return list(self.mydb.students_data.find({'StudentID': usn}))[0]['name']  
 
 
     def get_event_name(self,  eid):
 
-         pass
+        return list(self.mydb.events.find({'eid': eid }))[0]['ename'] 
 
 
     def get_attendees(self,  eid, email):
+        data = list(self.mydb.attendance_collection.find({'eid' : eid.strip() },{'_id':0}))
+        student_list = { x['usn']: self.get_name(  x['usn'])   for x in data }
+        event_name = self.get_event_name(eid)
+        print(email, event_name)
+        email_sender.send_list(sorted(student_list.items()), email, event_name)
+        print('sending email')
+        return data
 
-         pass
 
     def invite_eligible_students(self,  eid):
 
-         pass
+        usns = [ (x['StudentID'], x['email'], x['name']) for x in list(self.mydb.students_data.find({})) ]
+        event = list(self.mydb.events.find({'eid': eid  }))[0]
+        
+        for usn, email, name in usns:
+            constraint, _reason = self.constraint_check(usn, eid)
+            if constraint :
+                email_sender.send_invite(email, name, event )
+        print('email invites sent')
+        return usns
+
+
+
+
+
+

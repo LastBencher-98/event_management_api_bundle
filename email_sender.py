@@ -16,3 +16,13 @@ please do not share it publically'''
         ezgmail.send( i.strip(), 'Assigned as event coordinator', body_string)
 
 
+
+def send_token(email, token, event ):
+        date_obj = eval( event['date'])
+        body_string = f'''
+You have been successfully registered  to the event {event['ename']},  {event['caption']}
+which will be held  on  { date_obj.strftime("%m/%d/%Y") }
+Your  registration token : "{token} ".
+Please carry it on the day of event '''
+        subject = f"Registration for {event['ename'].upper()} successful"
+        ezgmail.send( email, subject, body_string)
