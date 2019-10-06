@@ -28,7 +28,7 @@ attendance_collection
 
 # ravish TODOS,
 
-
+"im going to add a little email handling stuff, which sends token, to the co ordinators
 
 
 # divyashree TODOS,
