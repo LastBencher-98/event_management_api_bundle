@@ -31,6 +31,10 @@ attendance_collection
 "im going to add a little email handling stuff, which sends token, to the co ordinators
 
 
+
+Dockerfile is not yet tested
+
+
 # divyashree TODOS,
 
 
