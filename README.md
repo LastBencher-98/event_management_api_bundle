@@ -5,7 +5,7 @@ The API bundle that manages event records and resolves attendance issues for the
 
 ## API Documentation (POSTMAN)
 
-(Link)[https://documenter.getpostman.com/view/9043780/SVtR3rAM?version=latest]
+[Link](https://documenter.getpostman.com/view/9043780/SVtR3rAM?version=latest)
 
 
 ## Usage
