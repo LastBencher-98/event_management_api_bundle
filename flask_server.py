@@ -9,6 +9,7 @@ from flask import Flask, jsonify, request, render_template
 from flask_restful import Api, Resource 
 import json
 import helper
+import sys
 
 
 mydb = MongoDB( database = 'event_management_backend', host='localhost', port=27017)
@@ -283,4 +284,17 @@ def bad_request(e):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5555, ssl_context=('cert.pem', 'key.pem'))
+    if sys.argv[1] == 'ssl':
+
+         app.run(host="0.0.0.0", port=5555, ssl_context=('cert.pem', 'key.pem')) #https
+         print("running over https")
+
+    elif sys.argv[1] == 'nossl'
+ 
+         app.run(host="0.0.0.0", port=5555)                              # http
+         print("running over http")
+
+    else:
+
+	print("please pass either ssl/nossl based on your requirements")
+
