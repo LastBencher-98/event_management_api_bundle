@@ -1,9 +1,15 @@
 # Event Management API Bundle
 
+The API bundle that manages event records and resolves attendance issues for the events
 
-## API Documentaion (POSTMAN)
+
+## API Documentation (POSTMAN)
+
+(Link)[https://documenter.getpostman.com/view/9043780/SVtR3rAM?version=latest]
+
 
 ## Usage
+
 
 ### Clone the repository
 
@@ -61,7 +67,7 @@ Pass yes/no for notifying the co-oridinators via email
 
 ### Run the Documentaion server
 
-    python3 populate_cords.py
+    python3 flask_document_server.py
 
 
 ### Generate self-signed digital certificates (optional) 
