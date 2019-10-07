@@ -91,12 +91,12 @@ For running over https
     python3 flask_server.py ssl
 
 
-## Contributors
+# Contributors
 
-    (Vishal_Nayak)[https://github.com/LastBencher-98/]
-    (Ravish)[https://github.com/ravish0007/]
-    (Divyashree)[https://github.com/DivyashreeNaik]
-    (Sumana_Rehaman)[https://github.com/nismiya]
+* [Vishal_Nayak](https://github.com/LastBencher-98)<br>
+* [Ravish](https://github.com/ravish0007)<br>
+* [Divyashree](https://github.com/DivyashreeNaik)<br>
+* [Sumana_Rehaman](https://github.com/nismiya)<br>
 
 
 
