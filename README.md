@@ -89,7 +89,10 @@ For running over http
 For running over https
 
     python3 flask_server.py ssl
-
+# TODOS
+* Deploy in cloud 
+* Debugging Dockerfile since its not tested
+* Making the whole codebase PEP8 compatible
 
 # Contributors
 
